@@ -20,6 +20,7 @@ import pandas as pd
 from itertools import product
 from inspect import getsourcefile
 from io import open
+from scraper import news_df
 
 
 # ##Constants##
@@ -516,8 +517,6 @@ class SentimentIntensityAnalyzer(object):
 
 if __name__ == '__main__':
     # --- examples -------
-    news_df = pd.read_csv("stock-market-news.csv")
-    
     sentences = news_df['headline'].tolist()
 
 
