@@ -61,24 +61,28 @@ def scrape_yahoo_news(url, path=None):
     #This return statement is optional, we are doing this just analyze the final output 
     return news_df 
 
+def check_company_ticker(n):
+    company_tick = n
+    cap_company = n.capitalize()
+    cap_tick = company_tick.upper()
+
+    result_ticker = ticker_df[ticker_df["Symbol"] == cap_tick]
+    result_company = ticker_df[ticker_df["Name"] == cap_company]
+
+    if not result_company.empty:
+        ticker_list = result_company["Symbol"].to_list()
+    elif not result_ticker.empty:
+        ticker_list = result_ticker["Symbol"].to_list()
+    else:
+        print("No matching records found")
+    
+    ticker = str(ticker_list[0])
+
+    return ticker
+        
+
 
 ticker_df = pd.read_csv("constituents_csv.csv")
-company = input("Enter name of the company to find: ")
-company_tick = company
-cap_company = company.capitalize()
-cap_tick = company_tick.upper()
-
-result_ticker= ticker_df[ticker_df["Symbol"] == cap_tick]
-result_company = ticker_df[ticker_df["Name"] == cap_company]
-
-if not result_ticker.empty:
-    ticker_list = result_ticker["Symbol"].to_list()
-elif not result_company.empty:
-    ticker_list = result_company["Symbol"].to_list()
-else:
-    print("No matching records found")
-
-ticker = str(ticker_list[0])
-
+ticker = check_company_ticker(input("Enter name of the company to find: ")) 
 YAHOO_NEWS_URL = BASE_URL + "/quote/" + ticker + "?p=" + ticker + "&.tsrc=fin-srch"
 news_df = scrape_yahoo_news(YAHOO_NEWS_URL)

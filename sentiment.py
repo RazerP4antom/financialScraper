@@ -20,7 +20,8 @@ import pandas as pd
 from itertools import product
 from inspect import getsourcefile
 from io import open
-from scraper import news_df
+# from scraper import news_df
+
 
 
 # ##Constants##
@@ -51,7 +52,7 @@ BOOSTER_DICT = \
      "completely": B_INCR, "considerable": B_INCR, "considerably": B_INCR,
      "decidedly": B_INCR, "deeply": B_INCR, "effing": B_INCR, "enormous": B_INCR, "enormously": B_INCR,
      "entirely": B_INCR, "especially": B_INCR, "exceptional": B_INCR, "exceptionally": B_INCR,
-     "extreme": B_INCR, "extremely": B_INCR,
+     "extreme": B_INCR, "extremely": B_INCR, "disappointing": B_DECR,
      "fabulously": B_INCR, "flipping": B_INCR, "flippin": B_INCR, "frackin": B_INCR, "fracking": B_INCR,
      "fricking": B_INCR, "frickin": B_INCR, "frigging": B_INCR, "friggin": B_INCR, "fully": B_INCR,
      "fuckin": B_INCR, "fucking": B_INCR, "fuggin": B_INCR, "fugging": B_INCR,
@@ -62,7 +63,7 @@ BOOSTER_DICT = \
      "so": B_INCR, "substantially": B_INCR,
      "thoroughly": B_INCR, "total": B_INCR, "totally": B_INCR, "tremendous": B_INCR, "tremendously": B_INCR,
      "uber": B_INCR, "unbelievably": B_INCR, "unusually": B_INCR, "utter": B_INCR, "utterly": B_INCR,
-     "very": B_INCR,
+     "very": B_INCR, "accelerate":B_DECR, "accelerated":B_DECR,
      "almost": B_DECR, "barely": B_DECR, "hardly": B_DECR, "just enough": B_DECR,
      "kind of": B_DECR, "kinda": B_DECR, "kindof": B_DECR, "kind-of": B_DECR,
      "less": B_DECR, "little": B_DECR, "marginal": B_DECR, "marginally": B_DECR,
@@ -199,7 +200,7 @@ class SentimentIntensityAnalyzer(object):
     Give a sentiment intensity score to sentences.
     """
 
-    def __init__(self, lexicon_file="vader_lexicon.txt", emoji_lexicon="emoji_utf8_lexicon.txt"):
+    def __init__(self, lexicon_file="vader_lexicon2.txt", emoji_lexicon="emoji_utf8_lexicon.txt"):
         _this_module_file_path_ = os.path.abspath(getsourcefile(lambda: 0))
         lexicon_full_filepath = os.path.join(os.path.dirname(_this_module_file_path_), lexicon_file)
         with codecs.open(lexicon_full_filepath, encoding='utf-8') as f:
@@ -507,7 +508,8 @@ class SentimentIntensityAnalyzer(object):
             neu = 0.0
 
         sentiment_dict = \
-            {"neg": round(neg, 3),
+            {
+             "neg": round(neg, 3),
              "neu": round(neu, 3),
              "pos": round(pos, 3),
              "compound": round(compound, 4)}
@@ -515,12 +517,17 @@ class SentimentIntensityAnalyzer(object):
         return sentiment_dict
 
 
-if __name__ == '__main__':
-    # --- examples -------
-    sentences = news_df['headline'].tolist()
+# if __name__ == '__main__':
+#     # --- examples -------
+#     sentences = news_df['headline'].tolist()
+#     df = pd.DataFrame(columns=['compound', 'neg', 'neu', 'pos'])
 
 
-    analyzer = SentimentIntensityAnalyzer()
-    for sentence in sentences:
-        vs = analyzer.polarity_scores(sentence)
-        print("{:-<65} {}".format(sentence, str(vs)))
+
+#     analyzer = SentimentIntensityAnalyzer()
+#     for sentence in sentences:
+#         vs = analyzer.polarity_scores(sentence) 
+#         df.loc[len(df)] = [vs['compound'], vs['neg'], vs['neu'], vs['pos']]
+#         print("{:-<65} {}".format(sentence, str(vs)))
+    
+#     print(df)
