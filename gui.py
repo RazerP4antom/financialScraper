@@ -6,6 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 from sentiment import *
+from scraper import *
 import numpy as np
 
 BASE_URL = 'https://finance.yahoo.com' #Global Variable

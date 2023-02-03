@@ -20,7 +20,6 @@ import pandas as pd
 from itertools import product
 from inspect import getsourcefile
 from io import open
-# from scraper import news_df
 
 
 
@@ -516,18 +515,3 @@ class SentimentIntensityAnalyzer(object):
 
         return sentiment_dict
 
-
-# if __name__ == '__main__':
-#     # --- examples -------
-#     sentences = news_df['headline'].tolist()
-#     df = pd.DataFrame(columns=['compound', 'neg', 'neu', 'pos'])
-
-
-
-#     analyzer = SentimentIntensityAnalyzer()
-#     for sentence in sentences:
-#         vs = analyzer.polarity_scores(sentence) 
-#         df.loc[len(df)] = [vs['compound'], vs['neg'], vs['neu'], vs['pos']]
-#         print("{:-<65} {}".format(sentence, str(vs)))
-    
-#     print(df)

@@ -6,8 +6,6 @@ from bs4 import BeautifulSoup
 import urllib.parse
 import pandas as pd
 
-BASE_URL = 'https://finance.yahoo.com' #Global Variable 
-
 
 def get_page(url):
     """Download a webpage and return a beautiful soup doc"""
@@ -79,10 +77,3 @@ def check_company_ticker(n):
     ticker = str(ticker_list[0])
 
     return ticker
-        
-
-
-ticker_df = pd.read_csv("constituents_csv.csv")
-ticker = check_company_ticker(input("Enter name of the company to find: ")) 
-YAHOO_NEWS_URL = BASE_URL + "/quote/" + ticker + "?p=" + ticker + "&.tsrc=fin-srch"
-news_df = scrape_yahoo_news(YAHOO_NEWS_URL)
