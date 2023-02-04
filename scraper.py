@@ -6,6 +6,9 @@ from bs4 import BeautifulSoup
 import urllib.parse
 import pandas as pd
 
+BASE_URL = 'https://finance.yahoo.com' #Global Variable
+ticker_df = pd.read_csv("constituents_csv.csv")
+
 
 def get_page(url):
     """Download a webpage and return a beautiful soup doc"""
@@ -31,11 +34,9 @@ def parse_news(news_tag):
     news_url = news_tag.find('a')['href'] #link
     news_content = news_tag.find('p').text #content
     news_image = news_tag.findParent().find('img')['src'] #thumb image
-    return { 'source' : news_source,
+    return { 
             'headline' : news_headline,
-            'url' : BASE_URL + news_url,
-            'content' : news_content,
-            'image' : news_image
+            'content' : news_content
            }
 
 def scrape_yahoo_news(url, path=None):
